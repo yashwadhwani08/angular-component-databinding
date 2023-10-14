@@ -1,16 +1,31 @@
 <div class="container">
-  <app-cockpit (serverCreated)="onServerAdded($event)" (bpCreated)="onBlueprintAdded($event)"></app-cockpit>
-  <hr>
+  <app-cockpit
+    (serverCreated)="onServerAdded($event)"
+    (bpCreated)="onBlueprintAdded($event)"
+  ></app-cockpit>
+  <hr />
   <div class="row">
     <div class="col-xs-12">
-      <button class="btn btn-primary" (click)="onChangeFirst()">Change First Element</button>
-      <button class="btn btn-danger" (click)="onDestroy()">Destroy Element</button>
+      <button class="btn btn-primary" (click)="onChangeFirst()">
+        Change First Element
+      </button>
+      <button class="btn btn-danger" (click)="onDestroy()">
+        Destroy Element
+      </button>
       <!-- <app-server-element *ngFor="let serverElement of serverElements" [srvElement]="serverElement"> -->
-      <app-server-element *ngFor="let serverElement of serverElements" [name]="serverElement.name">
+      <app-server-element
+        *ngFor="let serverElement of serverElements"
+        [name]="serverElement.name"
+      >
         <!-- Testing if we can pass some other HTML code inside the opening and closing tags of our own components. Result => No, it doesn't work without 'ng-content'! -->
-        <p>
-          <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
-          <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
+        <!-- If we wish to make use of local ref in content of ng-content inside that component in which this would be rendered, we can use @ContentChild() just like we make usse of ViewChild() if in the same component the local ref is used-->
+        <p #contentParagraph>
+          <strong *ngIf="serverElement.type === 'server'" style="color: red">{{
+            serverElement.content
+          }}</strong>
+          <em *ngIf="serverElement.type === 'blueprint'">{{
+            serverElement.content
+          }}</em>
         </p>
       </app-server-element>
     </div>

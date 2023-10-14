@@ -13,6 +13,7 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  ContentChild, 
 } from '@angular/core';
 
 @Component({
@@ -34,7 +35,11 @@ export class ServerElementComponent
   @Input('srvElement') element: { type: string; name: string; content: string };
   @Input() name: string;
 
-  @ViewChild('heading', {static: true}) header: ElementRef;
+  @ViewChild('heading', { static: true }) header: ElementRef;
+  //using local ref of content via @ContentChild()
+  // We can make use of ngAfterContentInit()
+  @ContentChild('contentParagraph') paragraph: ElementRef;
+
   // Checking the order of execution
   constructor() {
     console.log('constructor called!');
@@ -49,6 +54,9 @@ export class ServerElementComponent
   ngOnInit(): void {
     console.log('ngOnInit called!');
     console.log('Text Content: ', this.header.nativeElement.textContent);
+    console.log(
+      'Text Content of paragraph: ' + this.paragraph.nativeElement.textContent
+    );
   }
 
   // Runs on every change detection run, can be performace intensive, use carefully!
@@ -59,6 +67,10 @@ export class ServerElementComponent
   ngAfterContentInit(): void {
     console.log('ngAfterContentInit called!');
     console.log('Text Content: ', this.header.nativeElement.textContent);
+    console.log(
+      'Text Content of paragraph: ',
+      this.paragraph.nativeElement.textContent
+    );
   }
 
   ngAfterContentChecked(): void {
